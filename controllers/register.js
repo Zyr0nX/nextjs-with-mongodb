@@ -28,8 +28,9 @@ export const getOne = async (id) => {
 
 export const update = async (id, data) => {
     await connectMongoose();
-    // Can't update, need fix later
-    const register = await Register.findOneAndUpdate({ _id: id }, { $set: { data } }, { new: true });
+
+    const register = await Register.findOneAndUpdate({ _id: id }, { $set: { student: data.student, course: data.course, date: data.date } }, { new: true });
+    
     return register;
 }
 

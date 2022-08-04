@@ -6,11 +6,11 @@ const schema = new mongoose.Schema({
         required: true
     },
     birthDate: {
-        type: Date,
+        type: String,
         required: true
     }
 });
 
 const Student = mongoose.models.Student || mongoose.model("Student", schema);
 
-export default Student;
+module.exports = { Student }

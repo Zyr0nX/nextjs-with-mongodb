@@ -1,3 +1,5 @@
+import NextCors from 'nextjs-cors';
+
 const courseController = require('../../../../controllers/course');
 
 export default async function handler(req, res) {

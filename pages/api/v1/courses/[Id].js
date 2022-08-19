@@ -1,7 +1,16 @@
 const courseController = require('../../../../controllers/course');
 
+import NextCors from 'nextjs-cors';
+   
 export default async function handler(req, res) {
     const id = req.query.Id;
+
+    await NextCors(req, res, {
+        // Options
+        methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+        origin: '*',
+        optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+     });
 
     const method = req.method;
 

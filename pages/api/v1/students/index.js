@@ -1,7 +1,17 @@
+import NextCors from 'nextjs-cors';
+
+
 const studentController = require('../../../../controllers/student');
 
 export default async function handler(req, res) {
 
+    await NextCors(req, res, {
+        // Options
+        methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+        origin: '*',
+        optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+     });
+    
     const method = req.method;
 
     let result;
@@ -13,6 +23,7 @@ export default async function handler(req, res) {
             break;
         case 'POST':
             result = await studentController.add(req.body);
+            res.setHeader("Allow", "GET, PUT, DELETE");
             res.status(201).json(result);
             break;
         default:

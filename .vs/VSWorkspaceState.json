@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\controllers",
+    "\\models",
+    "\\pages",
+    "\\pages\\api",
+    "\\pages\\api\\v1",
+    "\\pages\\api\\v1\\courses",
+    "\\pages\\api\\v1\\registers",
+    "\\pages\\api\\v1\\students",
+    "\\public"
+  ],
+  "SelectedNode": "\\README.md",
+  "PreviewInSolutionExplorer": false
+}

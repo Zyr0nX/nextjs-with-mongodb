@@ -19,13 +19,29 @@ function loadData() {
         // contentType: "application/json",
         // dataType: ""
     }).done(function (response) {
+        // debugger;
         $('.grid-data').empty();
         $.each(response, function (index, item) {
+            var course = "";
+            $.each(item.courses, function(courseIndex, courseItem){
+                course = course + ", " + courseItem.name;
+            })
+            course = course.substring(2, course.length);
+            if(course == ""){
+                course = "[ ]";
+            }
+
+            var studentClass = "[ ]";
+            if(item.class != null){
+                studentClass = item.class.name;
+            }
+
             var trHTML = $(`<tr>
                                 <th scope="row">${index + 1}</th>
-                                <td>${item._id}</td>
-                                <td>${item.name}</td>
+                                <td><input type="hidden" value=${item._id}>${item.name}</td>
                                 <td>${item.birthDate}</td>
+                                <td>${course}</td>
+                                <td>${studentClass}</td>
                                 <td>
                                     <a onclick = "EditStudent(this)">Edit</a>
                                     <a onclick = "DeleteStudent(this)">Delete</a>
@@ -40,9 +56,10 @@ function loadData() {
 }
 
 function EditStudent(item){
-    sessionStorage.setItem('studentID', $(item).parent().parent().find("td:nth-child(2)").text());
-    sessionStorage.setItem('studentName', $(item).parent().parent().find("td:nth-child(3)").text());
-    sessionStorage.setItem('studentBirthDate', $(item).parent().parent().find("td:nth-child(4)").text());
+    debugger;
+    sessionStorage.setItem('studentID',  $(item).parent().parent().find("td:nth-child(2)").find("input").val());
+    sessionStorage.setItem('studentName', $(item).parent().parent().find("td:nth-child(2)").text());
+    sessionStorage.setItem('studentBirthDate', $(item).parent().parent().find("td:nth-child(3)").text());
     window.location.href = "update.html";
 }
 

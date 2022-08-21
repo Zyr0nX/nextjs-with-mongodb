@@ -3,12 +3,33 @@ $(document).ready(function () {
 })
 
 function loadData(){
+    $.ajax({
+        url: "http://localhost:3000/api/v1/courses",
+        method: "GET",
+    }).done(function (response) {
+        $('.listChk').empty();
+        $.each(response, function (index, item) {
+            var trHTML = $(`    <input type="checkbox" id="${item._id}" name="${item._id}">
+                                <label for="vehicle1" style="margin-right: 10px;">${item.name}</label>
+                    `)
+            $('.listChk').append(trHTML);
+        })
+    }).fail(function (response) {
+
+    })
+
     $("#txbID").val(sessionStorage.getItem('studentID'));
     $("#txbName").val(sessionStorage.getItem('studentName'));
     $("#txbBirthDay").val(sessionStorage.getItem('studentBirthDate'));
 }
 
 function addStudent(){
+
+    var selected = [];
+    $('.listChk input:checked').each(function() {
+        selected.push($(this).attr('name'));
+    });
+    
     var method = "POST";
     var url = "http://localhost:3000/api/v1/students";
     
@@ -25,6 +46,8 @@ function addStudent(){
 
     student.name = $("#txbName").val();
     student.birthDate = $("#txbBirthDay").val();
+    student.courses = selected;
+
     // debugger;
     $.ajax({
         url: url,

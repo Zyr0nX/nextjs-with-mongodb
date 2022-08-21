@@ -1,7 +1,7 @@
 import { connectMongoose } from "../lib/connect";
 import { Student } from "../models/student";
 import { Course } from "../models/course";
-import { Class } from "../models/class";
+import { _Class } from "../models/class";
 
 export const add = async (data) => {
    
@@ -9,9 +9,9 @@ export const add = async (data) => {
 
     const student = await Student.create(data);
 
-    const _class = await Class.findOneAndUpdate({ _id: data.class }, { $addToSet: { students: id } }, { new: true });
+    const _class = await _Class.findOneAndUpdate({ _id: data.class }, { $addToSet: { students: student._id } }, { new: true });
     
-    await data.courses.forEach(async element => {
+    await data.courses?.forEach(async element => {
         await Course.findOneAndUpdate({ _id: element }, { $addToSet: { students: id } }, { new: true });
     });
 
@@ -46,9 +46,9 @@ export const update = async (id, data) => {
     const student = await Student.findOneAndUpdate({ _id: id }, { $set: { name: data.name, birthDate: data.birthDate, class: data.class, courses: data.courses } }, { new: true });
     // const student = await Student.findOneAndUpdate({ _id: data.students }, { $set: { class: id } }, { new: true });
     // await Class.updateMany({ }, { $pull: { students: id } })
-    const _class = await Class.findOneAndUpdate({ _id: data.class }, { $addToSet: { students: id } }, { new: true });
+    const _class = await _Class.findOneAndUpdate({ _id: data.class }, { $addToSet: { students: id } }, { new: true });
     
-    await data.courses.forEach(async element => {
+    await data.courses?.forEach(async element => {
         await Course.findOneAndUpdate({ _id: element }, { $addToSet: { students: id } }, { new: true });
     });
 

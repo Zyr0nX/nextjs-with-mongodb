@@ -8,7 +8,7 @@ export const add = async (data) => {
 
     const course = await Course.create(data);
 
-    await data.students.forEach(async element => {
+    await data.students?.forEach(async element => {
         await Student.findOneAndUpdate({ _id: element }, { $addToSet: { courses: id } }, { new: true });
     });
 
@@ -40,9 +40,9 @@ export const update = async (id, data) => {
 
     const course = await Course.findOneAndUpdate({ _id: id }, { $set: { name: data.name, credit: data.credit, time: data.time, students: data.students } }, { new: true });
 
-    // await Student.update({'courses': {$exists : true}}, { $pull: { courses: id } })
+    //await Student.updateMany({'courses': { $exists : true }}, { $pull: { courses: [id] } })
     
-    await data.students.forEach(async element => {
+    await data.students?.forEach(async element => {
         await Student.findOneAndUpdate({ _id: element }, { $addToSet: { courses: id } }, { new: true });
     });
 

@@ -33,6 +33,7 @@ function addStudent(){
         window.location.href = "index.html";
     }).fail(function (response) {
         alert("Some thing has not working");
+        window.location.href = "index.html";
     })
 }
 

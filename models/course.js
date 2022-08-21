@@ -13,7 +13,7 @@ const schema = new mongoose.Schema({
         type: String,
         required: true
     },
-    student: [{
+    students: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Student",
         required: false
@@ -22,4 +22,4 @@ const schema = new mongoose.Schema({
 
 const Course = mongoose.models.Course || mongoose.model("Course", schema);
 
-export default Course;
+module.exports = { Course }

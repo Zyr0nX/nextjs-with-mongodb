@@ -52,6 +52,33 @@ function DeleteStudent(item){
     })
 }
 
+function FindStudent(){
+    $.ajax({
+        url: "http://localhost:3000/api/v1/students/name/" + $(".me-2").val(),
+        method: "GET",
+        // data: "",
+        // contentType: "application/json",
+        // dataType: ""
+    }).done(function (response) {
+        $('.grid-data').empty();
+        $.each(response, function (index, item) {
+            var trHTML = $(`<tr>
+                                <th scope="row">${index + 1}</th>
+                                <td>${item._id}</td>
+                                <td>${item.name}</td>
+                                <td>${item.birthDate}</td>
+                                <td>
+                                    <a onclick = "EditStudent(this)">Edit</a>
+                                    <a onclick = "DeleteStudent(this)">Delete</a>
+                                </td>
+                            </tr>`)
+            $('.grid-data').append(trHTML);
+        })
+    }).fail(function (response) {
+        alert("error");
+    })
+}
+
 // function loadData(){
 //     var request = new XMLHttpRequest();
 //     var params = "action=something";

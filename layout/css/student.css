@@ -1,0 +1,71 @@
+
+.container-table{
+    margin-top: 100px;
+}
+
+.container-table #btn-add-student{
+    text-decoration: none;
+    background-color: rgb(24, 90, 24);
+    color: white;
+    padding: 7px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color .3s;
+}
+
+.container-table #btn-add-student:hover{
+    background-color: rgb(53, 157, 53);
+    color: white;
+}
+
+.container-table table{
+    margin-top: 20px;
+}
+
+.container-table table thead tr th:first-child{
+    width: 10%;
+}
+
+.container-table table thead tr th:nth-child(2){
+    width: 20%;
+}
+
+.container-table table thead tr th:nth-child(3){
+    width: 35%;
+}
+
+.container-table table thead tr th:nth-child(4){
+    width: 20%;
+}
+
+.container-table table tbody a:nth-child(1){
+    color: white;
+    background-color: rgb(4, 4, 113);
+}
+
+.container-table table tbody a:nth-child(1):hover{
+    color: white;
+    background-color: rgb(102, 102, 183);
+}
+
+.container-table table tbody a:nth-child(2){
+    color: white;
+    background-color: rgb(139, 10, 17);
+}
+
+.container-table table tbody a:nth-child(2):hover{
+    color: white;
+    background-color: rgb(217, 18, 28);
+}
+
+
+.container-table table tbody a{
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 0 3px;
+    cursor: pointer;
+    transition: background-color .3s;
+}
+
+

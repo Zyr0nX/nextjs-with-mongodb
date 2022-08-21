@@ -12,7 +12,12 @@ const schema = new mongoose.Schema({
     time: {
         type: String,
         required: true
-    }
+    },
+    student: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Student",
+        required: false
+    }]
 });
 
 const Course = mongoose.models.Course || mongoose.model("Course", schema);

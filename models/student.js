@@ -9,10 +9,10 @@ const schema = new mongoose.Schema({
         type: String,
         required: true
     },
-    course: [{
+    courses: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Course",
-        required: false
+        required: true
     }]
 });
 

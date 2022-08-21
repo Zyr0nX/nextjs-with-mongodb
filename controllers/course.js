@@ -8,6 +8,10 @@ export const add = async (data) => {
 
     const course = await Course.create(data);
 
+    await data.students.forEach(async element => {
+        await Student.findOneAndUpdate({ _id: element }, { $addToSet: { courses: id } }, { new: true });
+    });
+
     return course;
 }
 
@@ -26,7 +30,7 @@ export const getOne = async (id) => {
 
     const course = await Course
         .findOne({ _id: id })
-        .populate("courses");
+        .populate("students");
 
     return course;
 }
@@ -34,9 +38,13 @@ export const getOne = async (id) => {
 export const update = async (id, data) => {
     await connectMongoose();
 
-    const course = await Course.findOneAndUpdate({ _id: id }, { $set: { name: data.name, credit: data.credit, time: data.time } , $push: { students: data.students } }, { new: true });
+    const course = await Course.findOneAndUpdate({ _id: id }, { $set: { name: data.name, credit: data.credit, time: data.time, students: data.students } }, { new: true });
+
+    // await Student.update({'courses': {$exists : true}}, { $pull: { courses: id } })
     
-    const student = await Student.findOneAndUpdate({ _id: data.students }, { $push: { courses: id } }, { new: true });
+    await data.students.forEach(async element => {
+        await Student.findOneAndUpdate({ _id: element }, { $addToSet: { courses: id } }, { new: true });
+    });
 
     return course;
 }

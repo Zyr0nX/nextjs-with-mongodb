@@ -1,12 +1,19 @@
 import { connectMongoose } from "../lib/connect";
 import { Student } from "../models/student";
 import { Course } from "../models/course";
+import { Class } from "../models/class";
 
 export const add = async (data) => {
    
     await connectMongoose();
 
     const student = await Student.create(data);
+
+    const _class = await Class.findOneAndUpdate({ _id: data.class }, { $addToSet: { students: id } }, { new: true });
+    
+    await data.courses.forEach(async element => {
+        await Course.findOneAndUpdate({ _id: element }, { $addToSet: { students: id } }, { new: true });
+    });
 
     return student;
 }
@@ -16,7 +23,8 @@ export const get = async () => {
 
     const student = await Student
         .find()
-        .populate("courses");
+        .populate("courses")
+        .populate("class");
 
     return student;
 }
@@ -26,7 +34,8 @@ export const getOne = async (id) => {
 
     const student = await Student
         .findOne({ _id: id })
-        .populate("courses");;
+        .populate("courses")
+        .populate("class");
 
     return student;
 }
@@ -34,9 +43,14 @@ export const getOne = async (id) => {
 export const update = async (id, data) => {
     await connectMongoose();
 
-    const student = await Student.findOneAndUpdate({ _id: id }, { $set: { name: data.name, birthDate: data.birthDate }, $push: { courses: data.courses } }, { new: true });
+    const student = await Student.findOneAndUpdate({ _id: id }, { $set: { name: data.name, birthDate: data.birthDate, class: data.class, courses: data.courses } }, { new: true });
+    // const student = await Student.findOneAndUpdate({ _id: data.students }, { $set: { class: id } }, { new: true });
+    // await Class.updateMany({ }, { $pull: { students: id } })
+    const _class = await Class.findOneAndUpdate({ _id: data.class }, { $addToSet: { students: id } }, { new: true });
     
-    const course = await Course.findOneAndUpdate({ _id: data.courses }, { $push: { students: id } }, { new: true });
+    await data.courses.forEach(async element => {
+        await Course.findOneAndUpdate({ _id: element }, { $addToSet: { students: id } }, { new: true });
+    });
 
     return student;
 }

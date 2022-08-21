@@ -13,7 +13,12 @@ const schema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Course",
         required: true
-    }]
+    }],
+    class: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Class",
+        required: false
+    }
 });
 
 const Student = mongoose.models.Student || mongoose.model("Student", schema);

@@ -3,6 +3,10 @@ $(document).ready(function () {
 })
 
 function loadData() {
+    sessionStorage.setItem('studentID', "");
+    sessionStorage.setItem('studentName', "");
+    sessionStorage.setItem('studentBirthDate', "");
+
     $.ajax({
         url: "http://localhost:3000/api/v1/students",
         method: "GET",
@@ -10,7 +14,6 @@ function loadData() {
         // contentType: "application/json",
         // dataType: ""
     }).done(function (response) {
-        alert("here");
         $('.grid-data').empty();
         $.each(response, function (index, item) {
             var trHTML = $(`<tr>
@@ -19,13 +22,32 @@ function loadData() {
                                 <td>${item.name}</td>
                                 <td>${item.birthDate}</td>
                                 <td>
-                                    <a href="update.html">Edit</a>
-                                    <a>Delete</a>
+                                    <a onclick = "EditStudent(this)">Edit</a>
+                                    <a onclick = "DeleteStudent(this)">Delete</a>
                                 </td>
                             </tr>`)
             $('.grid-data').append(trHTML);
         })
     }).fail(function (response) {
+        alert("error");
+    })
+}
+
+function EditStudent(item){
+    sessionStorage.setItem('studentID', $(item).parent().parent().find("td:nth-child(2)").text());
+    sessionStorage.setItem('studentName', $(item).parent().parent().find("td:nth-child(3)").text());
+    sessionStorage.setItem('studentBirthDate', $(item).parent().parent().find("td:nth-child(4)").text());
+    window.location.href = "update.html";
+}
+
+function DeleteStudent(item){
+    var id = $(item).parent().parent().find("td:nth-child(2)").text();
+    $.ajax({
+        url: "http://localhost:3000/api/v1/students/" + id,
+        method: "DELETE"
+    }).done(function () {
+        $(item).parent().parent().remove();
+    }).fail(function () {
         alert("error");
     })
 }

@@ -12,9 +12,14 @@ const schema = new mongoose.Schema({
     time: {
         type: String,
         required: true
-    }
+    },
+    register: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Register",
+        required: false
+    }]
 });
 
 const Course = mongoose.models.Course || mongoose.model("Course", schema);
 
-export default Course;
+module.exports = { Course }

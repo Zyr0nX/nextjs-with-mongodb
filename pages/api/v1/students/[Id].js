@@ -20,7 +20,6 @@ export default async function handler(req, res) {
     switch (method) {
         case 'GET':
             result = await studentController.getOne(id);
-            res.setHeader("Allow", "GET, PUT, DELETE");
             res.status(200).json(result);
             break;
         case 'PUT':

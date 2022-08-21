@@ -3,6 +3,7 @@ import NextCors from 'nextjs-cors';
 const registerController = require('../../../../controllers/register');
 
 export default async function handler(req, res) {
+    
     await NextCors(req, res, {
         // Options
         methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],

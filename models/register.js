@@ -1,13 +1,17 @@
 import mongoose from "mongoose";
 
-const schema = new mongoose.Schema({
+import { studentSchema } from "./student";
+
+const registerSchema = new mongoose.Schema({
     student: {
-        type: String,
-        required: true
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Student",
+        required: false
     },
     course: {
-        type: String,
-        required: true
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Course",
+        required: false
     },
     date: {
         type: Date,
@@ -15,6 +19,8 @@ const schema = new mongoose.Schema({
     }
 });
 
-const Register = mongoose.models.Register || mongoose.model("Register", schema);
+mongoose.model("Student", studentSchema);
 
-export default Register;
+const Register = mongoose.models.Register || mongoose.model("Register", registerSchema);
+
+module.exports = { Register }

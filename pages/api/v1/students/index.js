@@ -1,6 +1,5 @@
 import NextCors from 'nextjs-cors';
 
-
 const studentController = require('../../../../controllers/student');
 
 export default async function handler(req, res) {
@@ -23,7 +22,6 @@ export default async function handler(req, res) {
             break;
         case 'POST':
             result = await studentController.add(req.body);
-            res.setHeader("Allow", "GET, PUT, DELETE");
             res.status(201).json(result);
             break;
         default:

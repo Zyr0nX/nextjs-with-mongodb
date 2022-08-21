@@ -29,7 +29,7 @@ export const getOne = async (id) => {
 export const update = async (id, data) => {
     await connectMongoose();
 
-    const course = await Course.findOneAndUpdate({ _id: id }, { $set: { name: data.name, credit: data.credit, time: data.time } }, { new: true });
+    const course = await Course.findOneAndUpdate({ _id: id }, { $set: { name: data.name, credit: data.credit, time: data.time, course: data.course } }, { new: true });
     
     return course;
 }

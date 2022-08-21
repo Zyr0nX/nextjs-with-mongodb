@@ -13,8 +13,14 @@ export const add = async (data) => {
 export const get = async () => {
     await connectMongoose();
 
-    const register = await Register.find();
-
+    const register = await Register
+    .find()
+    .populate(
+        {
+            path: 'student'
+        }
+    )
+    console.log(register);
     return register;
 }
 

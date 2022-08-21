@@ -35,7 +35,7 @@ function loadData() {
             sessionStorage.setItem('isFinding', "")
         })
     }).fail(function (response) {
-        alert("error");
+        alert("Some errors caused when getting data");
     })
 }
 
@@ -48,67 +48,21 @@ function EditStudent(item){
 
 function DeleteStudent(item){
     var id = $(item).parent().parent().find("td:nth-child(2)").text();
-    $.ajax({
-        url: "http://localhost:3000/api/v1/students/" + id,
-        method: "DELETE"
-    }).done(function () {
-        $(item).parent().parent().remove();
-    }).fail(function () {
-        alert("error");
-    })
+    if (confirm("Want to delete?")) {
+        $.ajax({
+            url: "http://localhost:3000/api/v1/students/" + id,
+            method: "DELETE"
+        }).done(function () {
+            $(item).parent().parent().remove();
+        }).fail(function () {
+            alert("Some errors caused when deleting");
+        })
+      }
 }
 
 function FindStudent(){
     sessionStorage.setItem('isFinding', $(".me-2").val().trim());
 }
-
-
-// function loadData(){
-//     var request = new XMLHttpRequest();
-//     var params = "action=something";
-//     request.open('POST', 'http://localhost:3000/api/v1/students', true);
-//     request.onreadystatechange = function() {if (request.readyState==4) alert("It worked!");};
-//     request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-//     request.setRequestHeader("Content-length", params.length);
-//     request.setRequestHeader("Connection", "close");
-//     request.send(params);
-// }
-
-// function loadData(){
-//     const userAction = async () => {
-//         const response = await fetch('http://localhost:3000/api/v1/students');
-//         const myJson = await response.json(); //extract JSON from the http response
-//         // do something with myJson
-//       }
-// }
-
-// function loadData()  {
-//     // Call fetch(url) with default options.
-//     // It returns a Promise object:
-//     var aPromise = fetch('http://localhost:3000/api/v1/students');
-  
-//     // Work with Promise object:
-//     aPromise
-//       .then(function(response) {
-//           console.log("OK! Server returns a response object:");
-//           console.log(response);
-//           if(!response.ok) {
-//              throw new Error("HTTP error, status = " + response.status);
-//           }
-//           // Get JSON Promise from response object:
-//           var myJSON_promise = response.json();
-  
-//           // Work with Promise object:
-//           myJSON_promise.then(function(myJSON)  {
-//             console.log("OK! JSON:");
-//             console.log(myJSON);
-//           })
-//       })
-//       .catch(function(error)  {
-//           console.log("Noooooo! Something error:");
-//           console.log(error);
-//       });
-//   }
 
 
 

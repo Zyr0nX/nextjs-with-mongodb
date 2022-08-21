@@ -12,16 +12,20 @@ function addStudent(){
     var method = "POST";
     var url = "http://localhost:3000/api/v1/students";
     
+    var msg = "Add new student successfully";
+
+    var student = {};
+    
     if($("#txbID").val() != ''){
         method = "PUT";
         url = url + "/" + $("#txbID").val();
+        msg = "Edit student successfully";
+        student._id = $("#txbID").val();
     }
 
-    var student = {};
-    student._id = $("#txbID").val();
     student.name = $("#txbName").val();
     student.birthDate = $("#txbBirthDay").val();
-    debugger;
+    // debugger;
     $.ajax({
         url: url,
         method: method,
@@ -29,7 +33,7 @@ function addStudent(){
         contentType: "application/json",
         dataType: "json"
     }).done(function (response) {
-        alert("Add new student successfully");
+        alert(msg);
         window.location.href = "index.html";
     }).fail(function (response) {
         alert("Some thing has not working");
